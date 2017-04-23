@@ -420,6 +420,12 @@ class ResolutionRequest {
       } else if (this._platform != null &&
                  this._hasteFS.exists(potentialModulePath + '.' + this._platform + '.js')) {
         file = potentialModulePath + '.' + this._platform + '.js';
+      } else if (this._platform != null &&
+                 this._hasteFS.exists(potentialModulePath + '.' + this._platform + '.ts')) {
+        file = potentialModulePath + '.' + this._platform + '.ts';
+      } else if (this._platform != null &&
+                 this._hasteFS.exists(potentialModulePath + '.' + this._platform + '.tsx')) {
+        file = potentialModulePath + '.' + this._platform + '.tsx';
       } else if (this._preferNativePlatform &&
                  this._hasteFS.exists(potentialModulePath + '.native.js')) {
         file = potentialModulePath + '.native.js';

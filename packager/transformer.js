@@ -19,6 +19,7 @@ const json5 = require('json5');
 const makeHMRConfig = require('babel-preset-react-native/configs/hmr');
 const path = require('path');
 const resolvePlugins = require('babel-preset-react-native/lib/resolvePlugins');
+const ts = require('./ts-transformer');
 
 const {compactMapping} = require('./src/Bundler/source-map');
 
@@ -129,7 +130,9 @@ function transform(src, filename, options) {
 module.exports = function(data, callback) {
   let result;
   try {
-    result = transform(data.sourceCode, data.filename, data.options);
+    result = data.filename.match(/^.*.tsx?$/)
+      ? ts.transform(data.sourceCode, data.filename, data.options)
+      : transform(data.sourceCode, data.filename, data.options);
   } catch (e) {
     callback(e);
     return;
@@ -140,3 +143,6 @@ module.exports = function(data, callback) {
 
 // export for use in jest
 module.exports.transform = transform;
+
+// export for use in ts-transformer
+module.exports.buildBabelConfig = buildBabelConfig;
