@@ -131,7 +131,7 @@ class DependencyGraph {
   }) {
     this._opts = {
       assetExts: assetExts || [],
-      extensions: extensions || ['js', 'json'],
+      extensions: extensions || ['js', 'json', 'ts', 'tsx'],
       extraNodeModules,
       forceNodeFilesystemAPI: !!forceNodeFilesystemAPI,
       globalTransformCache,

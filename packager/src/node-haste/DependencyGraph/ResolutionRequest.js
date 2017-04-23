@@ -427,6 +427,10 @@ class ResolutionRequest {
         file = potentialModulePath + '.js';
       } else if (this._hasteFS.exists(potentialModulePath + '.json')) {
         file = potentialModulePath + '.json';
+      } else if (this._hasteFS.exists(potentialModulePath + '.ts')) {
+        file = potentialModulePath + '.ts';
+      } else if (this._hasteFS.exists(potentialModulePath + '.tsx')) {
+        file = potentialModulePath + '.tsx';
       } else {
         throw new UnableToResolveError(
           fromModule,
