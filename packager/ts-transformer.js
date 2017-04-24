@@ -4,13 +4,14 @@ const babel = require("babel-core")
 const generate = require("babel-generator").default
 const ts = require("typescript")
 const appRootPath = require('app-root-path');
-const tsConfig = require(path.join(appRootPath, 'tsconfig.json'));
+const fs = require('fs');
+const tsConfig = appRootPath.require('tsconfig.json');
 const upstream = require('./transformer');
 const { File } = require("babel-core/lib/transformation/file")
 const { SourceMapConsumer } = require("source-map")
 
-const transformJs = require("./js-transformer")
-const { compactMapping } = require("react-native/packager/src/Bundler/source-map")
+const transformJs = require("./transformer")
+const { compactMapping } = require("./src/Bundler/source-map")
 
 /**
  * This is a copy of upstream.transform, but modified to:
