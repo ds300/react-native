@@ -131,7 +131,7 @@ module.exports = function(data, callback) {
   let result;
   try {
     result = data.filename.match(/^.*.tsx?$/)
-      ? ts.transform(data.sourceCode, data.filename, data.options)
+      ? ts.transform(data.sourceCode, data.filename, data.options, buildBabelConfig)
       : transform(data.sourceCode, data.filename, data.options);
   } catch (e) {
     callback(e);
@@ -143,6 +143,3 @@ module.exports = function(data, callback) {
 
 // export for use in jest
 module.exports.transform = transform;
-
-// export for use in ts-transformer
-module.exports.buildBabelConfig = buildBabelConfig;

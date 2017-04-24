@@ -6,7 +6,6 @@ const ts = require("typescript")
 const appRootPath = require('app-root-path');
 const fs = require('fs');
 const tsConfig = appRootPath.require('tsconfig.json');
-const upstream = require('./transformer');
 const { File } = require("babel-core/lib/transformation/file")
 const { SourceMapConsumer } = require("source-map")
 
@@ -20,7 +19,7 @@ const { compactMapping } = require("./src/Bundler/source-map")
  * 3. Translate the transformed JS source-map from the original TS code.
  * 4. Store raw mappings of translated source-map so that RN can use them.
  **/
-function transformTypeScript(src, filename, options) {
+function transformTypeScript(src, filename, options, buildBabelConfig) {
   options = options || {};
 
   const OLD_BABEL_ENV = process.env.BABEL_ENV;
@@ -30,7 +29,7 @@ function transformTypeScript(src, filename, options) {
     const compilerOptions = buildTSCompilerOptionsConfig()
     const tsResult = ts.transpileModule(src, { compilerOptions })
 
-    const babelConfig = upstream.buildBabelConfig(filename, options);
+    const babelConfig = buildBabelConfig(filename, options);
     const transformResult = babel.transform(tsResult.outputText, babelConfig);
 
     const generateResult = generate(transformResult.ast, {
